@@ -1,0 +1,30 @@
+{
+  "name": "@app/shopping-cart",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext", "deno.ns", "deno.unstable"]
+  },
+  "test": {
+    "permissions": "default"
+  },
+  "permissions": {
+    "default": {
+      "net": true
+    }
+  },
+  "tasks": {
+    "dev": "deno run -A npm:vite dev"
+  },
+  "exports": {},
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@1.0.6",
+    "@vitejs/plugin-vue": "npm:@vitejs/plugin-vue@6.0.4",
+    "vite": "npm:vite@7.3.1",
+    "vite-plugin-vue-devtools": "npm:vite-plugin-vue-devtools@8.0.5",
+    "vitest": "npm:vitest@4.0.18",
+    "vue": "npm:vue@3.5.27",
+    "@/": "./src/",
+    "@public/": "./public/"
+  },
+  "exclude": [".vite/", "public/"]
+}
