@@ -3,11 +3,7 @@ const msg = "Hello World";
 </script>
 
 <template>
-    <h1>{{ msg }}</h1>
+    <v-card :title="msg" text="FooBar"></v-card>
 </template>
 
-<style scoped>
-h1 {
-    color: #42b983;
-}
-</style>
+<style scoped></style>
