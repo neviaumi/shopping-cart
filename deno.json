@@ -2,8 +2,17 @@
   "name": "@app/shopping-cart",
   "nodeModulesDir": "auto",
   "compilerOptions": {
-    "types": ["unplugin-fonts/client"],
-    "lib": ["dom", "dom.iterable", "esnext", "deno.ns", "deno.unstable", "node"]
+    "types": [
+      "unplugin-fonts/client"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "deno.ns",
+      "deno.unstable",
+      "node"
+    ]
   },
   "test": {
     "permissions": "default"
@@ -33,7 +42,12 @@
     "vue": "npm:vue@3.5.27",
     "@/": "./src/",
     "@public/": "./public/",
-    "vuetify": "npm:vuetify@3.11.8"
+    "vuetify": "npm:vuetify@3.11.8",
+    "pinia": "npm:pinia@3.0.4"
   },
-  "exclude": [".vite/", "public/", "dist/"]
+  "exclude": [
+    ".vite/",
+    "public/",
+    "dist/"
+  ]
 }
