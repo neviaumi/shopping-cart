@@ -5,14 +5,7 @@ import {useSessionStore} from "../../stores/session.ts";
   import Cart from "./Cart.vue";
 
 const sessionStore = useSessionStore();
-const isCurrentSessionConfigured = sessionStore.isSessionSet
- const currentTitle = computed(() => {
-    if (!isCurrentSessionConfigured) {
-        return "Setup Cart Session"
-    } else {
-        return `Shopping on ${sessionStore.sessionName}`
-    }
-  })
+const isCurrentSessionConfigured = computed(() => sessionStore.isSessionSet)
 </script>
 
 <template>

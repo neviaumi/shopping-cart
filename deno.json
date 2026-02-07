@@ -2,10 +2,6 @@
   "name": "@app/shopping-cart",
   "nodeModulesDir": "auto",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "types": [
       "unplugin-fonts/client"
     ],
