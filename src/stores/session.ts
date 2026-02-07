@@ -1,68 +1,74 @@
 import { defineStore } from "pinia";
-import { readonly, ref, watch } from "vue";
+import { readonly, ref, computed } from "vue";
+import storage from "@/storage.ts";
 
 export interface Session {
-  sessionId: string | null;
-  sessionName: string | null;
+  id: string | null;
+  name: string | null;
 }
 
-const STORAGE_KEY = "shopping:session:current";
+const CURRENT_SESSION_KEY = "shopping:session:current";
+const PREV_SESSION_HISTORY_KEY = "shopping:sessions";
+const SESSION_KEY = (id: string) => `shopping:session:${id}`;
+const MAX_SESSIONS = 2046;
 
-function getStoredSession(): Session {
+function getPreviousSessions() {
+  return JSON.parse(storage.getItem(PREV_SESSION_HISTORY_KEY) || "[]") as string[];
+}
+
+function getNumberOfSessions() {
+  return getPreviousSessions().length;
+}
+
+function restoreFromStorage(): Session {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = storage.getItem(CURRENT_SESSION_KEY);
     if (stored) {
       return JSON.parse(stored) as Session;
     }
   } catch (e) {
     console.error("Failed to parse session from localStorage", e);
   }
-  return { sessionId: null, sessionName: null };
+  return { id: null, name: null };
 }
 
 export const useSessionStore = defineStore("session", () => {
   // 1. Initialization: Hydrate directly to avoid re-renders/flickers
-  const initial = getStoredSession();
-  const sessionId = ref<string | null>(initial.sessionId || null);
-  const sessionName = ref<string | null>(initial.sessionName || null);
-
-  // 2. Sync Strategy: Efficiently watch for changes
-  watch(
-    [sessionId, sessionName],
-    ([newId, newName]) => {
-      try {
-        if (!newId && !newName) {
-          localStorage.removeItem(STORAGE_KEY);
-        } else {
-          localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify({
-              sessionId: newId,
-              sessionName: newName,
-            }),
-          );
-        }
-      } catch (e) {
-        console.error("Failed to save session to localStorage", e);
-      }
-    },
-    // No 'deep: true' needed for primitive refs in array
-  );
+  const initial = restoreFromStorage();
+  const sessionId = ref(initial.id);
+  const sessionName = ref(initial.name);
 
   function setSession(name: string) {
-    sessionId.value = crypto.randomUUID();
+    if (getNumberOfSessions() >= MAX_SESSIONS) {
+      throw new Error("Too many sessions");
+    }
+    const _sessionId = crypto.randomUUID();
+    sessionId.value = _sessionId;
     sessionName.value = name;
+    storage.setItem(CURRENT_SESSION_KEY, JSON.stringify({ id: _sessionId, name: name } satisfies Session));
   }
 
   function clearSession() {
+    if (!sessionId.value) {
+      return;
+    }
+    const session = {
+      id: sessionId.value,
+      name: sessionName.value,
+    };
+    const prevSessions = getPreviousSessions();
+    storage.setItem(SESSION_KEY(sessionId.value), JSON.stringify(session));
+    storage.setItem(PREV_SESSION_HISTORY_KEY, JSON.stringify([...prevSessions, session.id]));
     sessionId.value = null;
     sessionName.value = null;
-    // Watcher handles localStorage removal
+    storage.removeItem(CURRENT_SESSION_KEY);
   }
 
   return {
     sessionId: readonly(sessionId),
     sessionName: readonly(sessionName),
+    isSessionSet: computed(() => sessionId.value !== null),
+    getNumberOfSessions,
     setSession,
     clearSession,
   };
