@@ -1,9 +1,27 @@
 <script setup lang="ts">
-const msg = "Hello World";
+import CartSession from "./components/CartSession/CartSession.vue";
 </script>
 
 <template>
-    <v-card :title="msg" text="FooBar"></v-card>
+    <v-app><v-app-bar>
+  <template v-slot:prepend>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  </template>
+
+  <v-app-bar-title>Application Bar</v-app-bar-title>
+
+  <template v-slot:append>
+    <v-btn icon="mdi-history"></v-btn>
+  </template>
+</v-app-bar>
+<v-main>
+    <v-container>
+<CartSession/>
+
+    </v-container>
+</v-main>
+</v-app>
+
 </template>
 
 <style scoped></style>

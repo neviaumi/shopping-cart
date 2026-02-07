@@ -5,6 +5,7 @@
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "npm:@deno/vite-plugin@1.0.6": "1.0.6_vite@7.3.1__picomatch@4.0.3",
     "npm:@fontsource/roboto@^5.2.9": "5.2.9",
+    "npm:@mdi/font@^7.4.47": "7.4.47",
     "npm:@vitejs/plugin-vue@6.0.4": "6.0.4_vite@7.3.1__picomatch@4.0.3_vue@3.5.27",
     "npm:@vue/test-utils@2.4.6": "2.4.6",
     "npm:happy-dom@20.5.0": "20.5.0",
@@ -491,6 +492,9 @@
         "@jridgewell/resolve-uri",
         "@jridgewell/sourcemap-codec"
       ]
+    },
+    "@mdi/font@7.4.47": {
+      "integrity": "sha512-43MtGpd585SNzHZPcYowu/84Vz2a2g31TvPMTm9uTiCSWzaheQySUcSyUH/46fPnuPQWof2yd0pGBtzee/IQWw=="
     },
     "@nodelib/fs.scandir@2.1.5": {
       "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
@@ -1942,6 +1946,7 @@
       "jsr:@std/assert@1",
       "npm:@deno/vite-plugin@1.0.6",
       "npm:@fontsource/roboto@^5.2.9",
+      "npm:@mdi/font@^7.4.47",
       "npm:@vitejs/plugin-vue@6.0.4",
       "npm:@vue/test-utils@2.4.6",
       "npm:happy-dom@20.5.0",

@@ -1,0 +1,15 @@
+{
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.suggest.imports.hosts": { "https://deno.land": true },
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "typescript.validate.enable": false,
+  "javascript.validate.enable": false
+}

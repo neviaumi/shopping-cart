@@ -2,6 +2,10 @@
   "name": "@app/shopping-cart",
   "nodeModulesDir": "auto",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "types": [
       "unplugin-fonts/client"
     ],
@@ -43,6 +47,7 @@
     "@/": "./src/",
     "@public/": "./public/",
     "vuetify": "npm:vuetify@3.11.8",
+    "@mdi/font": "npm:@mdi/font@^7.4.47",
     "pinia": "npm:pinia@3.0.4"
   },
   "exclude": [
