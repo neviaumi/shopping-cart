@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import { readonly, ref, computed } from "vue";
+import { computed, readonly, ref } from "vue";
 import storage from "@/storage.ts";
 
 export interface Session {
   id: string | null;
   name: string | null;
+  createdAt: number;
 }
 
 const CURRENT_SESSION_KEY = "shopping:session:current";
@@ -13,7 +14,9 @@ const SESSION_KEY = (id: string) => `shopping:session:${id}`;
 const MAX_SESSIONS = 2046;
 
 function getPreviousSessions() {
-  return JSON.parse(storage.getItem(PREV_SESSION_HISTORY_KEY) || "[]") as string[];
+  return JSON.parse(
+    storage.getItem(PREV_SESSION_HISTORY_KEY) || "[]",
+  ) as string[];
 }
 
 function getNumberOfSessions() {
@@ -29,7 +32,7 @@ function restoreFromStorage(): Session {
   } catch (e) {
     console.error("Failed to parse session from localStorage", e);
   }
-  return { id: null, name: null };
+  return { id: null, name: null, createdAt: 0 };
 }
 
 export const useSessionStore = defineStore("session", () => {
@@ -37,6 +40,7 @@ export const useSessionStore = defineStore("session", () => {
   const initial = restoreFromStorage();
   const sessionId = ref(initial.id);
   const sessionName = ref(initial.name);
+  const sessionCreatedAt = ref(initial.createdAt);
 
   function setSession(name: string) {
     if (getNumberOfSessions() >= MAX_SESSIONS) {
@@ -45,7 +49,17 @@ export const useSessionStore = defineStore("session", () => {
     const _sessionId = crypto.randomUUID();
     sessionId.value = _sessionId;
     sessionName.value = name;
-    storage.setItem(CURRENT_SESSION_KEY, JSON.stringify({ id: _sessionId, name: name } satisfies Session));
+    sessionCreatedAt.value = Date.now();
+    storage.setItem(
+      CURRENT_SESSION_KEY,
+      JSON.stringify(
+        {
+          id: _sessionId,
+          name: name,
+          createdAt: sessionCreatedAt.value,
+        } satisfies Session,
+      ),
+    );
   }
 
   function clearSession() {
@@ -55,10 +69,14 @@ export const useSessionStore = defineStore("session", () => {
     const session = {
       id: sessionId.value,
       name: sessionName.value,
-    };
+      createdAt: sessionCreatedAt.value,
+    } satisfies Session;
     const prevSessions = getPreviousSessions();
     storage.setItem(SESSION_KEY(sessionId.value), JSON.stringify(session));
-    storage.setItem(PREV_SESSION_HISTORY_KEY, JSON.stringify([...prevSessions, session.id]));
+    storage.setItem(
+      PREV_SESSION_HISTORY_KEY,
+      JSON.stringify([...prevSessions, session.id]),
+    );
     sessionId.value = null;
     sessionName.value = null;
     storage.removeItem(CURRENT_SESSION_KEY);
@@ -67,6 +85,7 @@ export const useSessionStore = defineStore("session", () => {
   return {
     sessionId: readonly(sessionId),
     sessionName: readonly(sessionName),
+    sessionCreatedAt: readonly(sessionCreatedAt),
     isSessionSet: computed(() => sessionId.value !== null),
     getNumberOfSessions,
     setSession,

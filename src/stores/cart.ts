@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import { readonly, ref, computed } from "vue";
+import { computed, readonly, ref } from "vue";
 import { useSessionStore } from "./session.ts";
 import storage from "@/storage.ts";
 
-interface Item {
+export interface CartItem {
   id: string;
   name: string;
   quantity: number;
@@ -11,12 +11,12 @@ interface Item {
 }
 
 export interface Cart {
-  items: Item[];
+  items: CartItem[];
 }
 
 const CURRENT_CART_KEY = "shopping:session:current:cart";
-const HISTORY_CART_KEY = (sessionId: string) => `shopping:session:${sessionId}:cart`;
-
+const HISTORY_CART_KEY = (sessionId: string) =>
+  `shopping:session:${sessionId}:cart`;
 
 function restoreFromStorage(): Cart {
   try {
@@ -36,18 +36,17 @@ function restoreFromStorage(): Cart {
 
 function assertSessionSet(isSessionSet: boolean) {
   return (sessionId: unknown): sessionId is string => {
-    return isSessionSet
-  }
+    return isSessionSet;
+  };
 }
 
 export const useCartStore = defineStore("cart", () => {
   // 1. Initialization: Hydrate directly to avoid re-renders/flickers
   const initial = restoreFromStorage();
-  const cartItems = ref<Item[]>(initial.items);
+  const cartItems = ref<CartItem[]>(initial.items);
   const sessionStore = useSessionStore();
 
-
-  function addItem(item: Omit<Item, "id">) {
+  function addItem(item: Omit<CartItem, "id">) {
     if (!sessionStore.isSessionSet) {
       return;
     }
@@ -57,7 +56,7 @@ export const useCartStore = defineStore("cart", () => {
     return itemId;
   }
 
-  function updateItem(item: Item) {
+  function updateItem(item: CartItem) {
     if (!sessionStore.isSessionSet) {
       return;
     }
@@ -69,7 +68,7 @@ export const useCartStore = defineStore("cart", () => {
     storage.setItem(CURRENT_CART_KEY, JSON.stringify(cartItems.value));
   }
 
-  function removeItem(item: Item) {
+  function removeItem(item: CartItem) {
     if (!sessionStore.isSessionSet) {
       return;
     }
@@ -85,7 +84,10 @@ export const useCartStore = defineStore("cart", () => {
     if (!assertSessionSet(sessionStore.isSessionSet)(sessionStore.sessionId)) {
       return;
     }
-    storage.setItem(HISTORY_CART_KEY(sessionStore.sessionId), JSON.stringify(cartItems.value));
+    storage.setItem(
+      HISTORY_CART_KEY(sessionStore.sessionId),
+      JSON.stringify(cartItems.value),
+    );
     cartItems.value = [];
     storage.removeItem(CURRENT_CART_KEY);
     sessionStore.clearSession();
@@ -93,6 +95,12 @@ export const useCartStore = defineStore("cart", () => {
 
   return {
     items: readonly(cartItems),
+    subTotal: computed(() =>
+      cartItems.value.reduce(
+        (acc: number, item: CartItem) => acc + item.price * item.quantity,
+        0,
+      )
+    ),
     checkout,
     addItem,
     updateItem,
