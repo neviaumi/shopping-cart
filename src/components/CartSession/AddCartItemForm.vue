@@ -28,11 +28,13 @@ const handleAddItem = () => {
 <template>
                 <!-- Entry Form -->
             <v-form @submit.prevent="handleAddItem" class="mb-6">
+                <v-container>
                 <v-row dense>
                     <v-col cols="12" sm="5">
                         <v-text-field
                             v-model="newItemForm.name"
                             label="Item Name"
+                            name="session.name"
                             density="compact"
                             hide-details="auto"
                             required
@@ -64,6 +66,6 @@ const handleAddItem = () => {
                     <v-col cols="12" sm="2" class="d-flex align-center">
                         <v-btn color="primary" block height="40" type="submit">Add</v-btn>
                     </v-col>
-                </v-row>
+                </v-row></v-container>
             </v-form>
 </template>

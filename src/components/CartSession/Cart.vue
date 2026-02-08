@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { useCartStore } from '../../stores/cart.ts';
 import { useSessionStore } from '../../stores/session.ts';
-import CartItem from './CartItem.vue';
+import CartItem from './CartItem/CartItem.vue';
 import AddCartItemForm from './AddCartItemForm.vue';
 
 const cartStore = useCartStore();
@@ -36,34 +36,33 @@ const formatCurrency = (value: number) => currencyFormatter.format(value);
         <v-card-title>
             <v-container>
                 <v-row>
-                    <v-col cols="4">
-                        <v-sheet class="text-h6">At:</v-sheet>
-                    </v-col>
-                    <v-col  cols="8">
-                        <v-sheet >{{ sessionStore.sessionName }}</v-sheet>
+                    <v-col   class="text-h4">
+                        {{ sessionStore.sessionName }}
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="4">
-                        <v-sheet class="text-h6">Started</v-sheet>
-                    </v-col>
-                    <v-col cols="8">
-                        <v-sheet >{{ sessionCreatedAt }}</v-sheet>
+                    <v-col  class="text-h4">
+                        @ {{ sessionCreatedAt }}
                     </v-col>
                 </v-row>
             </v-container>
  
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="position-relative">
             <AddCartItemForm />
 
             <v-divider class="mb-6"></v-divider>
 
-            <!-- Subtotal Section -->
-            <div class="d-flex justify-space-between align-center mb-6">
-                <span class="text-h6">Subtotal</span>
-                <span class="text-h6 font-weight-bold">{{ formatCurrency(cartStore.subTotal) }}</span>
-            </div>
+            <v-container class="position-sticky top-0">
+                <v-row>
+                    <v-col class="text-h5 text-left">
+                        Subtotal
+                    </v-col>
+                    <v-col class="text-h5 font-weight-bold text-right">
+                        {{ formatCurrency(cartStore.subTotal) }}
+                    </v-col>
+                </v-row>
+            </v-container>
 
             <!-- List -->
             <v-list v-if="cartStore.items.length > 0">
