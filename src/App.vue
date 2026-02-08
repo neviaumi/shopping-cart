@@ -12,10 +12,7 @@ import CartSession from "./components/CartSession/CartSession.vue";
   </template>
 </v-app-bar>
 <v-main>
-    <v-container>
 <CartSession/>
-
-    </v-container>
 </v-main>
 </v-app>
 

@@ -32,7 +32,7 @@ const formatCurrency = (value: number) => currencyFormatter.format(value);
 
 </script>
 <template>
-    <v-card>
+    <v-card class="d-flex flex-column" style="height: 100vh;">
         <v-card-title>
             <v-container>
                 <v-row>
@@ -48,18 +48,23 @@ const formatCurrency = (value: number) => currencyFormatter.format(value);
             </v-container>
  
         </v-card-title>
-        <v-card-text class="position-relative">
+        <v-card-text class="flex-grow-1 overflow-y-auto">
             <AddCartItemForm />
 
             <v-divider class="mb-6"></v-divider>
 
-            <v-container class="position-sticky top-0">
+            <v-container class="position-sticky top-0 bg-surface" style="z-index: 5;">
                 <v-row>
                     <v-col class="text-h5 text-left">
                         Subtotal
                     </v-col>
                     <v-col class="text-h5 font-weight-bold text-right">
                         {{ formatCurrency(cartStore.subTotal) }}
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col>
+                    <v-btn color="primary"  block>Checkout</v-btn>
                     </v-col>
                 </v-row>
             </v-container>
