@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useCartStore, type CartItem } from '../../../stores/cart.ts';
+import { useCartStore, type CartItem } from '@/stores/cart.ts';
 const emit = defineEmits(['update']);
 const props = defineProps<{
     item: CartItem;

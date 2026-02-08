@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useCartStore } from '../../stores/cart.ts';
-import { useSessionStore } from '../../stores/session.ts';
+import { useCartStore } from '@/stores/cart.ts';
+import { useSessionStore } from '@/stores/session.ts';
 import CartItem from './CartItem/CartItem.vue';
 import AddCartItemForm from './AddCartItemForm.vue';
 import { formatCurrency, formatDate } from "@/utils/formatting.ts"

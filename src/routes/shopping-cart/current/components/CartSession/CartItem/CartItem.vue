@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useCartStore, type CartItem } from '../../../stores/cart.ts';
+import { useCartStore, type CartItem } from '@/stores/cart.ts';
 import InlineEditCartItemForm from './InlineEditCartItemForm.vue';
 import { formatCurrency } from "@/utils/formatting.ts"
 

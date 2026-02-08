@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import CartSession from "@/components/CartSession/CartSession.vue";
+import CartSession from "@/routes/shopping-cart/current/CartSession.vue";
 import HistoryListing from "@/routes/shopping-cart/history/HistoryListing.vue";
 import SessionDetail from "@/routes/shopping-cart/history/SessionDetail.vue";
 
