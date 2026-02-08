@@ -17,6 +17,13 @@ function safeParse(json: string | null, defaultValue: unknown) {
   }
 }
 
+export class SessionNotFoundError extends Error {
+  constructor() {
+    super("Session not found");
+    this.name = "SessionNotFoundError";
+  }
+}
+
 export function useHistoryStore() {
   function getArchivedSessions() {
     return JSON.parse(
@@ -35,6 +42,28 @@ export function useHistoryStore() {
   }
   function archiveCartItems(sessionId: string, cartItems: string) {
     storage.setItem(HISTORY_CART_KEY(sessionId), cartItems);
+  }
+  function getSessionDetail(sessionId: string) {
+    const session = safeParse(storage.getItem(SESSION_KEY(sessionId)), {
+      name: "",
+      createdAt: 0,
+      id: null,
+    });
+    if (!session.id) {
+      throw new SessionNotFoundError();
+    }
+    const cart = safeParse(storage.getItem(HISTORY_CART_KEY(sessionId)), []);
+    return {
+      id: session.id,
+      name: session.name,
+      createdAt: session.createdAt,
+      items: cart,
+      subTotal: cart.reduce(
+        (acc: number, item: { price: number; quantity: number }) =>
+          acc + item.price * item.quantity,
+        0,
+      ),
+    };
   }
   function getSessionsInfo(sessionIds: string[]) {
     return sessionIds.map((sessionId) => {
@@ -62,5 +91,6 @@ export function useHistoryStore() {
     archiveSession,
     archiveCartItems,
     getSessionsInfo,
+    getSessionDetail,
   };
 }

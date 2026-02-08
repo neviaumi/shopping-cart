@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { useHistoryStore } from "@/stores/history.ts";
 import { formatCurrency, formatDate } from "@/utils/formatting.ts"
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const historyStore = useHistoryStore();
 const sessions = historyStore.getSessionsInfo(historyStore.getArchivedSessions());
+
+function handleSessionClick(sessionId: string) {
+    router.push(`/shopping-cart/history/${sessionId}`);
+}
+
 </script>
 
 <template>
@@ -22,7 +29,7 @@ const sessions = historyStore.getSessionsInfo(historyStore.getArchivedSessions()
       <v-col cols="12">
         <v-card>
           <v-list lines="two" selectable="true">
-            <v-list-item v-for="session in sessions" :key="session.id">
+            <v-list-item v-for="session in sessions" :key="session.id" @click="handleSessionClick(session.id)">
               <template v-slot:prepend>
                 <v-avatar color="primary" icon="mdi-cart-check"></v-avatar>
               </template>

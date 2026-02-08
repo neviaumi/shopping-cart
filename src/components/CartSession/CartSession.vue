@@ -10,11 +10,13 @@ const isCurrentSessionConfigured = computed(() => sessionStore.isSessionSet)
 
 <template>
 
-    <div v-if="!isCurrentSessionConfigured">
+    <v-window>
+        <v-window-item v-if="!isCurrentSessionConfigured">
         <CreateCartSession/>
-    </div>
-    <div v-else>
+        </v-window-item>
+        <v-window-item v-else>
         <Cart/>
-    </div>
+        </v-window-item>
+    </v-window>        
     
 </template>
