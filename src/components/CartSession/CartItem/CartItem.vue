@@ -2,19 +2,14 @@
 import { ref } from 'vue';
 import { useCartStore, type CartItem } from '../../../stores/cart.ts';
 import InlineEditCartItemForm from './InlineEditCartItemForm.vue';
+import { formatCurrency } from "@/utils/formatting.ts"
+
 const props = defineProps<{
     item: CartItem;
 }>();
 
 const cartStore = useCartStore();
 const isEditing = ref(false);
-
-const currencyFormatter = new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP'
-});
-
-const formatCurrency = (value: number) => currencyFormatter.format(value);
 
 const toggleEdit = () => {
     isEditing.value = true;

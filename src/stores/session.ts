@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, readonly, ref } from "vue";
 import storage from "@/storage.ts";
+import { useHistoryStore } from "./history.ts";
 
 export interface Session {
   id: string | null;
@@ -9,19 +10,8 @@ export interface Session {
 }
 
 const CURRENT_SESSION_KEY = "shopping:session:current";
-const PREV_SESSION_HISTORY_KEY = "shopping:sessions";
-const SESSION_KEY = (id: string) => `shopping:session:${id}`;
 const MAX_SESSIONS = 2046;
-
-function getPreviousSessions() {
-  return JSON.parse(
-    storage.getItem(PREV_SESSION_HISTORY_KEY) || "[]",
-  ) as string[];
-}
-
-function getNumberOfSessions() {
-  return getPreviousSessions().length;
-}
+const historyStore = useHistoryStore();
 
 function restoreFromStorage(): Session {
   try {
@@ -43,7 +33,7 @@ export const useSessionStore = defineStore("session", () => {
   const sessionCreatedAt = ref(initial.createdAt);
 
   function setSession(name: string) {
-    if (getNumberOfSessions() >= MAX_SESSIONS) {
+    if (historyStore.getNumberOfArchivedSessions() >= MAX_SESSIONS) {
       throw new Error("Too many sessions");
     }
     const _sessionId = crypto.randomUUID();
@@ -71,12 +61,7 @@ export const useSessionStore = defineStore("session", () => {
       name: sessionName.value,
       createdAt: sessionCreatedAt.value,
     } satisfies Session;
-    const prevSessions = getPreviousSessions();
-    storage.setItem(SESSION_KEY(sessionId.value), JSON.stringify(session));
-    storage.setItem(
-      PREV_SESSION_HISTORY_KEY,
-      JSON.stringify([...prevSessions, session.id]),
-    );
+    historyStore.archiveSession(sessionId.value, JSON.stringify(session));
     sessionId.value = null;
     sessionName.value = null;
     storage.removeItem(CURRENT_SESSION_KEY);
@@ -87,7 +72,6 @@ export const useSessionStore = defineStore("session", () => {
     sessionName: readonly(sessionName),
     sessionCreatedAt: readonly(sessionCreatedAt),
     isSessionSet: computed(() => sessionId.value !== null),
-    getNumberOfSessions,
     setSession,
     clearSession,
   };

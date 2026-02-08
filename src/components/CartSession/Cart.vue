@@ -4,15 +4,14 @@ import { useCartStore } from '../../stores/cart.ts';
 import { useSessionStore } from '../../stores/session.ts';
 import CartItem from './CartItem/CartItem.vue';
 import AddCartItemForm from './AddCartItemForm.vue';
+import { formatCurrency, formatDate } from "@/utils/formatting.ts"
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const cartStore = useCartStore();
 const sessionStore = useSessionStore();
 const sessionCreatedAt = computed(() => {
-    return new Intl.DateTimeFormat('en-GB', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-        hour12: false
-    }).format(new Date(sessionStore.sessionCreatedAt));
+    return formatDate(new Date(sessionStore.sessionCreatedAt));
 });
 
 const newItemForm = ref({
@@ -20,13 +19,6 @@ const newItemForm = ref({
     price: null,
     quantity: 1
 });
-
-const currencyFormatter = new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP'
-});
-
-const formatCurrency = (value: number) => currencyFormatter.format(value);
 
 const handleCheckout = () => {
     cartStore.checkout();
