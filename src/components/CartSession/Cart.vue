@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useCartStore } from '@/stores/cart.ts';
-import { useSessionStore } from '@/stores/session.ts';
+import { useCartStore } from '../../stores/cart.ts';
+import { useSessionStore } from '../../stores/session.ts';
 import CartItem from './CartItem.vue';
 import AddCartItemForm from './AddCartItemForm.vue';
 
@@ -36,18 +36,18 @@ const formatCurrency = (value: number) => currencyFormatter.format(value);
         <v-card-title>
             <v-container>
                 <v-row>
-                    <v-col >
+                    <v-col cols="4">
                         <v-sheet class="text-h6">At:</v-sheet>
                     </v-col>
-                    <v-col >
+                    <v-col  cols="8">
                         <v-sheet >{{ sessionStore.sessionName }}</v-sheet>
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col >
+                    <v-col cols="4">
                         <v-sheet class="text-h6">Started</v-sheet>
                     </v-col>
-                    <v-col >
+                    <v-col cols="8">
                         <v-sheet >{{ sessionCreatedAt }}</v-sheet>
                     </v-col>
                 </v-row>
