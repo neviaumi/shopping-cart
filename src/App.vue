@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import CartSession from "./components/CartSession/CartSession.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 </script>
 
 <template>
@@ -8,14 +10,12 @@ import CartSession from "./components/CartSession/CartSession.vue";
   <v-app-bar-title>Shopping Cart</v-app-bar-title>
 
   <template v-slot:append>
-    <v-btn icon="mdi-history"></v-btn>
+    <v-btn icon="mdi-history" @click="router.push('/shopping-cart/history')"></v-btn>
   </template>
 </v-app-bar>
 <v-main>
-<CartSession/>
+    <RouterView />
 </v-main>
 </v-app>
 
 </template>
-
-<style scoped></style>

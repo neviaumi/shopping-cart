@@ -47,6 +47,10 @@ export default defineConfig({
         find: "@public/",
         replacement: "/",
       },
+      {
+        find: "@/",
+        replacement: "/src/",
+      },
     ],
   },
 });
