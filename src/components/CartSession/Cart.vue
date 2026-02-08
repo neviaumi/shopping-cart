@@ -57,7 +57,7 @@ const handleCheckout = () => {
 
             <v-divider class="mb-6"></v-divider>
 
-            <v-container class="position-sticky top-0 bg-surface" style="z-index: 5;">
+            <v-container v-if="cartStore.items.length > 0" class="position-sticky top-0 bg-surface" style="z-index: 5;">
                 <v-row>
                     <v-col class="text-h5 text-left">
                         Subtotal
@@ -66,7 +66,7 @@ const handleCheckout = () => {
                         {{ formatCurrency(cartStore.subTotal) }}
                     </v-col>
                 </v-row>
-                <v-row v-if="cartStore.items.length > 0">
+                <v-row >
                     <v-col>
                         <v-btn color="primary" block @click="handleCheckout">Checkout</v-btn>
                     </v-col>
@@ -79,10 +79,12 @@ const handleCheckout = () => {
                     <CartItem :item="item" />
                 </template>
             </v-list>
-            <div v-else class="text-center py-8 text-grey-darken-1 border-dashed rounded">
-                <v-icon icon="mdi-cart-outline" size="48" class="mb-2"></v-icon>
-                <div>Cart is empty</div>
-            </div>
+              <v-empty-state v-else
+              style="min-height: initial;"
+    icon="mdi-cart-outline"
+    title="Your cart is empty."
+    headline="Cart is empty"
+  ></v-empty-state>
         </v-card-text>
     </v-card>
 </template>
