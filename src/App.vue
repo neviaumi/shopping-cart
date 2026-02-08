@@ -5,9 +5,9 @@ const router = useRouter();
 </script>
 
 <template>
-    <v-app><v-app-bar>
+    <v-app><v-app-bar >
 
-  <v-app-bar-title><RouterLink style='text-decoration: none; color: inherit;' to="/shopping-cart/current">Shopping Cart</RouterLink></v-app-bar-title>
+  <v-app-bar-title class="font-weight-black text-h4" ><RouterLink style='text-decoration: none; color: inherit;' to="/shopping-cart/current">Shopping Cart</RouterLink></v-app-bar-title>
 
   <template v-slot:append>
     <v-btn icon="mdi-history" @click="router.push('/shopping-cart/history')"></v-btn>

@@ -64,6 +64,7 @@ export const useSessionStore = defineStore("session", () => {
     historyStore.archiveSession(sessionId.value, JSON.stringify(session));
     sessionId.value = null;
     sessionName.value = null;
+    sessionCreatedAt.value = 0;
     storage.removeItem(CURRENT_SESSION_KEY);
   }
 

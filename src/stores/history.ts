@@ -30,14 +30,14 @@ export function useHistoryStore() {
     storage.setItem(SESSION_KEY(sessionId), session);
     storage.setItem(
       PREV_SESSION_HISTORY_KEY,
-      JSON.stringify([getArchivedSessions(), sessionId]),
+      JSON.stringify([...getArchivedSessions(), sessionId]),
     );
   }
   function archiveCartItems(sessionId: string, cartItems: string) {
     storage.setItem(HISTORY_CART_KEY(sessionId), cartItems);
   }
   function getSessionsInfo(sessionIds: string[]) {
-    sessionIds.map((sessionId) => {
+    return sessionIds.map((sessionId) => {
       const session = safeParse(storage.getItem(SESSION_KEY(sessionId)), {
         name: "",
         createdAt: 0,
@@ -45,7 +45,7 @@ export function useHistoryStore() {
       });
       const cart = safeParse(storage.getItem(HISTORY_CART_KEY(sessionId)), []);
       return {
-        id: null,
+        id: session.id,
         name: session.name,
         createdAt: session.createdAt,
         subTotal: cart.reduce(
