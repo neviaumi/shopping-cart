@@ -28,6 +28,10 @@ const currencyFormatter = new Intl.NumberFormat('en-GB', {
 
 const formatCurrency = (value: number) => currencyFormatter.format(value);
 
+const handleCheckout = () => {
+    cartStore.checkout();
+    router.push('/shopping-cart/history');
+}
 
 
 </script>
@@ -62,9 +66,9 @@ const formatCurrency = (value: number) => currencyFormatter.format(value);
                         {{ formatCurrency(cartStore.subTotal) }}
                     </v-col>
                 </v-row>
-                <v-row>
+                <v-row v-if="cartStore.items.length > 0">
                     <v-col>
-                    <v-btn color="primary"  block>Checkout</v-btn>
+                        <v-btn color="primary" block @click="handleCheckout">Checkout</v-btn>
                     </v-col>
                 </v-row>
             </v-container>

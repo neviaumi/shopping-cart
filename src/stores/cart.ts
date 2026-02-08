@@ -35,7 +35,7 @@ function restoreFromStorage(): Cart {
 }
 
 function assertSessionSet(isSessionSet: boolean) {
-  return (sessionId: unknown): sessionId is string => {
+  return (_sessionId: unknown): _sessionId is string => {
     return isSessionSet;
   };
 }
