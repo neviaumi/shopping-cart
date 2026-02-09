@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, readonly, ref } from "vue";
-import storage from "@/storage.ts";
+import storage, { StorageSetItemError } from "@/storage.ts";
 import { useHistoryStore } from "./history.ts";
 
 export interface Session {
@@ -34,7 +34,7 @@ export const useSessionStore = defineStore("session", () => {
 
   function setSession(name: string) {
     if (historyStore.getNumberOfArchivedSessions() >= MAX_SESSIONS) {
-      throw new Error("Too many sessions");
+      throw new StorageSetItemError(new Error("Too many sessions"));
     }
     const _sessionId = crypto.randomUUID();
     sessionId.value = _sessionId;

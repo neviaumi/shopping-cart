@@ -18,7 +18,10 @@ describe("Session Store", () => {
 
   it("hydrates from existing localStorage data", () => {
     const existingSession = { id: "test-id", name: "Existing User" };
-    storage.setItem("shopping:session:current", JSON.stringify(existingSession));
+    storage.setItem(
+      "shopping:session:current",
+      JSON.stringify(existingSession),
+    );
 
     const store = useSessionStore();
 
@@ -86,6 +89,8 @@ describe("Session Store", () => {
 
     const store = useSessionStore();
 
-    expect(() => store.setSession("Overflow Session")).toThrow("Too many sessions");
+    expect(() => store.setSession("Overflow Session")).toThrow(
+      "Too many sessions",
+    );
   });
 });
