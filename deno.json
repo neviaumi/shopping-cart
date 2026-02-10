@@ -23,8 +23,8 @@
     }
   },
   "tasks": {
-    "dev": "dx vite dev",
-    "test": "dx vitest run"
+    "dev": "deno x vite dev",
+    "test": "deno x vitest run"
   },
   "exports": {},
   "imports": {
