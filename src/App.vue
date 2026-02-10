@@ -18,7 +18,7 @@ const router = useRouter();
                 "
                 to="/shopping-cart/current"
             >
-                <v-avatar image="/icons/128.png" size="64"></v-avatar>
+                <v-avatar image="icons/128.png" size="64"></v-avatar>
                 <h5
                     class="font-weight-black text-h4"
                     style="display: inline-block"

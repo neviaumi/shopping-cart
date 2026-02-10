@@ -1,4 +1,8 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  type RouteRecordRaw,
+} from "vue-router";
 
 import CartSession from "@/routes/shopping-cart/current/CartSession.vue";
 import HistoryListing from "@/routes/shopping-cart/history/HistoryListing.vue";
@@ -13,7 +17,7 @@ const routes = [
     component: SessionDetail,
     props: true,
   },
-];
+] as RouteRecordRaw[];
 
 const router = createRouter({
   history: createWebHashHistory(),
