@@ -26,6 +26,9 @@ jobs:
         with:
           deno-version: lts
 
+      - name: Setup
+        run: bash ./scripts/setup.sh
+
       - name: Test website
         run: bash ./scripts/test.sh
 
