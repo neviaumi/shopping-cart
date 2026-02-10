@@ -28,7 +28,7 @@ function handleSessionClick(sessionId: string) {
     <v-row v-else>
       <v-col cols="12">
         <v-card>
-          <v-list lines="two" selectable="true">
+          <v-list lines="two" selectable>
             <v-list-item v-for="session in sessions" :key="session.id" @click="handleSessionClick(session.id)">
               <template v-slot:prepend>
                 <v-avatar color="primary" icon="mdi-cart-check"></v-avatar>

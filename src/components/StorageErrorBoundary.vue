@@ -6,7 +6,6 @@ const error = ref(null);
 
 // This is the functional equivalent to React's componentDidCatch
 onErrorCaptured((err) => {
-    console.log(err);
     if (isStorageSetItemError(err)) {
         error.value = err;
         return false; // Prevents error from bubbling up to global handler
