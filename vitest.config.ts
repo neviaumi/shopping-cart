@@ -7,6 +7,7 @@ export default defineConfig((configEnv) => {
     viteConfig(configEnv),
     defineConfig({
       test: {
+        maxWorkers: 1,
         globals: true,
         setupFiles: ["./vitest.setup.ts"], // Path to the file created in Step 1
         css: false,
