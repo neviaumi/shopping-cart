@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { mount } from "@vue/test-utils";
-import storage, { StorageSetItemError } from "@/storage.ts";
+import { StorageSetItemError } from "@/storage.ts";
 import StorageErrorBoundary from "./StorageErrorBoundary.vue";
 
 const BrokenComponent = {

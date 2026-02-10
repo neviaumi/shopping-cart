@@ -1,9 +1,6 @@
 <script setup>
 import { ref, onErrorCaptured } from "vue";
-import storage, {
-    StorageSetItemError,
-    isStorageSetItemError,
-} from "@/storage.ts";
+import storage, { isStorageSetItemError } from "@/storage.ts";
 
 const error = ref(null);
 

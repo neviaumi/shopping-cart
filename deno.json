@@ -52,6 +52,7 @@
   "exclude": [
     ".vite/",
     "public/",
-    "dist/"
+    "dist/",
+    "dev-dist/"
   ]
 }
