@@ -139,9 +139,7 @@ The following tasks are defined in `deno.json`:
 ## ⚙️ Agent Environment Configuration (`.env.agent`)
 Whenever you execute terminal commands using the `run_command` tool, you must load the environment variables defined in the [.env.agent](file:///Users/david/my-apps/shopping-cart/.env.agent) file at the root of the workspace.
 
-To do this:
-1. Parse the key-value pairs inside [.env.agent](file:///Users/david/my-apps/shopping-cart/.env.agent).
-2. Prepend these variables directly in the command execution line. For example, if [.env.agent](file:///Users/david/my-apps/shopping-cart/.env.agent) defines `PATH="/Users/david/.deno/bin:/opt/homebrew/bin"`, then execute the command as:
-   ```bash
-   PATH="/Users/david/.deno/bin:/opt/homebrew/bin:$PATH" <command>
-   ```
+To do this, source the `.env.agent` file at the beginning of the command execution line. For example:
+```bash
+source .env.agent && <command>
+```
